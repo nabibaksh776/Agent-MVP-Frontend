@@ -66,6 +66,18 @@ export const AgentsSlice = createSlice({
         isSuccess: false,
       };
     },
+    HandleAgentDocuments(state, action) {
+      const { type, id } = action.payload;
+      let currentAgent = JSON.parse(JSON.stringify(state.selectedAgent.data));
+      if (type == "remove") {
+
+        let documents = currentAgent.documents.filter(
+          (document: any) => document.id !== id,
+        );
+        
+        state.selectedAgent.data.documents = documents
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(GetALLAgentsByCustomerID.pending, (state) => {
@@ -188,11 +200,7 @@ export const AgentsSlice = createSlice({
       state.uploadAgentDocx.loading = false;
       state.uploadAgentDocx.isSuccess = true;
       toast.success("document uploaded successfully");
-
-      console.log("selectedAgent--in redux--", state.selectedAgent);
       let currentAgent = JSON.parse(JSON.stringify(state.selectedAgent));
-      console.log("selectedAgent--in new docu--", action.payload.data);
-      console.log("selectedAgent--in redux2--", currentAgent);
       currentAgent.data?.documents.push(action.payload.data);
       state.selectedAgent = currentAgent;
     });
@@ -205,5 +213,5 @@ export const AgentsSlice = createSlice({
   },
 });
 
-export const { RESET_DELETE_AGENT } = AgentsSlice.actions;
+export const { RESET_DELETE_AGENT,HandleAgentDocuments } = AgentsSlice.actions;
 export default AgentsSlice.reducer;

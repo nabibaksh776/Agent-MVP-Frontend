@@ -14,7 +14,8 @@ const DropdownUser = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { logout_State } = useSelector((state: any) => state.Auth_States);
+  const { current_user } = useSelector((state: any) => state.Auth_States);
+  
   const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
     setLoading(true);
@@ -34,9 +35,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {current_user.data !== null ? `${current_user.data?.data?.firstName} ${current_user.data?.data?.lastName}` : "-"}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{current_user.data !== null ? current_user.data.data?.role : "-"}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

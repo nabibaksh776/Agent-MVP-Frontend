@@ -23,6 +23,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebar, setSideBar] = useState<any>([]);
   const { current_user } = useSelector((state: any) => state.Auth_States);
 
+  console.log("current_user in sidebar--", current_user);
   const updateSidebar = (role: any) => {
     let menuGroups: any = [];
     if (role == "admin") {
@@ -34,17 +35,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               icon: <MdDashboard size={20} />,
               label: "Dashboard",
               route: "/dashboard",
-              children: null,
-            },
-          ],
-        },
-        {
-          name: null,
-          menuItems: [
-            {
-              icon: <MdDashboard size={20} />,
-              label: "Agents",
-              route: "/agents/list",
               children: null,
             },
           ],
@@ -89,7 +79,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             {
               icon: <MdDashboard size={20} />,
               label: "Dashboard",
-              route: "/dashboard",
+              route: `/dashboard`,
+              children: null,
+            },
+          ],
+        },
+        {
+          name: null,
+          menuItems: [
+            {
+              icon: <LuUsers size={20} />,
+              label: "Agents",
+              route: `/agents/${current_user?.data ? current_user?.data?.data.id : ""}`,
               children: null,
             },
           ],
@@ -138,7 +139,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
           <Box className="flex w-full items-center justify-center">
             <Link
-              href="/"
+              href="/dashboard"
               className="text-center text-xl font-bold text-black dark:text-white"
             >
               AGENT MVP

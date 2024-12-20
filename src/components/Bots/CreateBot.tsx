@@ -304,7 +304,6 @@ const CreateNewBotForm: React.FC<any> = ({ id }) => {
             <TextField
               fullWidth
               className="text-black dark:text-white"
-              label="business information"
               {...register("business_information")}
               error={!!errors.business_information}
               helperText={errors.business_information?.message}
@@ -408,7 +407,6 @@ const CreateNewBotForm: React.FC<any> = ({ id }) => {
             <TextField
               fullWidth
               className="text-black dark:text-white"
-              label="Information"
               {...register("TInformation")}
               error={!!errors.TInformation}
               helperText={errors.TInformation?.message}

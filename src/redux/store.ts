@@ -6,6 +6,8 @@ import { ThunkAction } from "@reduxjs/toolkit"; // Correct import for ThunkActio
 import Auth_States from "./Auth/Auth";
 import CustomerSlice from "./Customer/Slice";
 import AgentsSlice from "./Agents/Slice";
+import SalesTechniqueSlice from "./SalesTechniques/Slice";
+import chat from './chat/Slice'
 // Define the types for the state
 export interface RootState {
   Auth_States: ReturnType<typeof Auth_States>;
@@ -17,6 +19,8 @@ export const store = configureStore({
     Auth_States: Auth_States,
     CustomerSlice: CustomerSlice,
     AgentsSlice: AgentsSlice,
+    SalesTechniqueSlice: SalesTechniqueSlice,
+    chatSlice: chat,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

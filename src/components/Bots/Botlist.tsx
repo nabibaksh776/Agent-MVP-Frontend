@@ -1,16 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { AppDispatch } from "@/redux/store";
 import { GetALLAgentsByCustomerID } from "@/redux/Agents/Apis";
+import { IoIosArrowBack } from "react-icons/io";
 // BotsList Component
 
 const BostList: React.FC<any> = ({ id }) => {
   let dispatch = useDispatch<AppDispatch>();
   const { allAgents } = useSelector((state: any) => state.AgentsSlice);
+  const { current_user } = useSelector((state: any) => state.Auth_States);
   console.log("id is----", id);
 
   console.log("allAgents is----", allAgents);
@@ -24,9 +26,16 @@ const BostList: React.FC<any> = ({ id }) => {
   return (
     <Box>
       <Box className="mb-4 mt-4">
-        <Box className="text-title-md font-bold text-black dark:text-white">
-          Agents
-        </Box>
+        <div className="flex items-center justify-start">
+          <Link href={`/customer/`}>
+            <Button>
+              <IoIosArrowBack color="inherit" size={25} />
+            </Button>
+          </Link>
+          <Box className="text-title-md font-bold text-black dark:text-white">
+            Agents
+          </Box>
+        </div>
       </Box>
       <Box className="h-screen min-h-[500px] rounded-md bg-white p-8 shadow-md dark:bg-boxdark">
         <Grid container spacing={4}>
@@ -69,29 +78,35 @@ const BostList: React.FC<any> = ({ id }) => {
             );
           })}
 
-          <Grid
-            item
-            xl={3}
-            lg={3}
-            md={3}
-            sm={12}
-            className="flex items-center justify-center"
-          >
-            <Link href={`/agents/create/${id}`}>
-              <Box className="flex cursor-pointer flex-col items-center justify-center">
-                <Box
-                  className="flex items-center justify-center bg-primary"
-                  sx={{
-                    width: "60px",
-                    height: "60px",
-                    borderRadius: "50px",
-                  }}
-                >
-                  <AiOutlinePlus size={20} className="text-white" />
-                </Box>
-              </Box>
-            </Link>
-          </Grid>
+          {current_user?.data?.data.role == "admin" ? (
+            <>
+              <Grid
+                item
+                xl={3}
+                lg={3}
+                md={3}
+                sm={12}
+                className="flex items-center justify-center"
+              >
+                <Link href={`/agents/create/${id}`}>
+                  <Box className="flex cursor-pointer flex-col items-center justify-center">
+                    <Box
+                      className="flex items-center justify-center bg-primary"
+                      sx={{
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50px",
+                      }}
+                    >
+                      <AiOutlinePlus size={20} className="text-white" />
+                    </Box>
+                  </Box>
+                </Link>
+              </Grid>
+            </>
+          ) : (
+            <></>
+          )}
         </Grid>
       </Box>
     </Box>
